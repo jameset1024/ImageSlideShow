@@ -5,16 +5,19 @@
 			imagesrc : [],
 			linksrc : [],
 			num : 0,
+			timer : '',
 			settings : $.extend({
 				speed : 10000	
 			}, options),
-			init : function(){
+			init : function(){				
 				is.gatherImages();
 				is.gatherLinks();
 				is.setHTML();
+				is.checkbox();
 				if(is.imagesrc.length > 1 ){
-				setInterval(function(){is.imageRotate()}, is.settings.speed);
+				is.timer = setInterval(function(){is.imageRotate()}, is.settings.speed);
 				}
+				
 			},
 			gatherImages : function(){
 				$('img').each(function(i){
@@ -42,7 +45,7 @@
 				var arrange = is.imagesrc.length;							
 				for(i=0; i < is.imagesrc.length; i++){
 					
-					$('#CheckBoxes').append('<input type="checkbox" value="' + i + '">');
+					$('#CheckBoxes').append('<input type="radio" name="image" class="imageButton" value="' + i + '">');
 					
 					is.el.append('<a href="' + is.linksrc[i] + '"><div class="ImageSlideShow" id="' + i + '"></div></a>');
 					
@@ -67,6 +70,19 @@
 				}
 				$("#" + is.num).show();
 				$("input[value=\"" + is.num + "\"]").prop('checked', true);
+			},
+			checkbox : function(){
+				$('input[name="image"]').each(function(){
+					$(this).click(function(){
+						var value = $(this).val();
+						$("#" + is.num).hide();
+						$("#" + value).show();						
+						is.num = value;
+						clearInterval(is.timer);
+						is.timer = setInterval(function(){is.imageRotate()}, is.settings.speed);
+					});
+					
+				});
 			}
 		}// end var is
 		is.init();
