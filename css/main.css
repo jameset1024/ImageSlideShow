@@ -30,9 +30,42 @@ html, body{
 #CheckBoxes input{
 	margin:.5% 3% 0 0;	
 }
-.active{
-	border:#36a3e8 solid thin;
+#leftarrow{
+	background:url(../images/arrow.png) no-repeat;
+	width:50px;
+	height:75px;
+	position:absolute;
+	left:1%;
+	opacity:0.5;
+	top:50%;
+	cursor:pointer;
+	z-index:99;
+	transition:all ease 0.5s;
 }
-input[type="checkbox"]:checked{
-	background:#000;
+#rightarrow{
+	background:url(../images/arrow.png) no-repeat;
+	width:50px;
+	height:75px;
+	position:absolute;
+	right:1%;
+	top:50%;
+	opacity:0.5;
+	cursor:pointer;
+	transform:rotate(180deg);
+	z-index:99;
+	transition:all ease 0.5s;
+}
+#leftarrow:hover, #rightarrow:hover{
+	opacity:1;
+}
+
+@media only screen and (max-height : 500px){
+	#CheckBoxes input{
+		margin-top:0;
+	}
+}
+@media only screen and (max-height : 375px){
+	#CheckBoxes{
+		display:none;
+	}
 }
