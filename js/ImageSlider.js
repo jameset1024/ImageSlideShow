@@ -26,11 +26,11 @@ Site: www.erikjamesthomas.com
 				if(is.imagesrc.length > 1 ){
 				is.timer = setInterval(function(){is.imageRotate()}, is.settings.speed);
 				}
-				$('body').delegate('#leftarrow', 'click', function(){
+				doc.delegate('#leftarrow', 'click', function(){
 					var dir = 'prev'; 
 					is.nextprev(dir);
 				});
-				$(document).delegate('#rightarrow', 'click', function(){
+				doc.delegate('#rightarrow', 'click', function(){
 					var dir = 'next';
 					is.nextprev(dir);
 				});
@@ -71,17 +71,19 @@ Site: www.erikjamesthomas.com
 				var arrange = is.imagesrc.length;							
 				for(i=0; i < is.imagesrc.length; i++){
 					if(is.settings.radio){
-					$('#CheckBoxes').append('<input type="radio" name="image" class="imageButton" value="' + i + '">');
+					$('#CheckBoxes').append('<div title="' + i + '" class="checkbox"></div>');
 					}
 					is.el.append('<a href="' + is.linksrc[i] + '"><div class="ImageSlideShow" id="' + i + '"></div></a>');
 					
 					$("#" + i).css({'background-image' : 'url(' + is.imagesrc[i] + ')',
 											'background-size' : 'cover',
 											'background-position' : 'center',
+											'background-repeat' : 'no-repeat',
 											'z-index' : arrange});
 					arrange--;
 				}//end for loop
-				$('input[value="0"]').prop('checked', true);
+				// Activates the div checkbox for the first image
+				$('div[title="0"]').addClass('checkbox-active');
 			},
 			imageRotate : function(){
 				//This will move the first image added of all other images
@@ -89,6 +91,8 @@ Site: www.erikjamesthomas.com
 					$("#" + is.num).css('z-index', is.imagesrc.length)	
 				}
 				$("#" + is.num).fadeOut(600);
+				//Deactivates current div checkbox
+				$('.checkbox-active').removeClass('checkbox-active');
 				//resets counter at the last image
 				if(is.num == is.imagesrc.length - 1){
 					is.num = 0;
@@ -97,15 +101,19 @@ Site: www.erikjamesthomas.com
 				is.num++
 				}
 				$("#" + is.num).show();
-				//checks radio button for currently displayed image
-				$("input[value=\"" + is.num + "\"]").prop('checked', true);
+				//Activates div checkbox for the rotate in image
+				$(".checkbox[title=\"" + is.num + "\"]" ).addClass('checkbox-active');
 			},
 			checkbox : function(){
-				$('input[name="image"]').each(function(){
+				$('.checkbox').each(function(){
 					$(this).click(function(){
-						var value = $(this).val();
+						//Deactivate div checkbox
+						$('.checkbox-active').removeClass('checkbox-active')
+						var value = $(this).attr('title');
 						$("#" + is.num).hide();
-						$("#" + value).show();						
+						$("#" + value).show();
+						//activate div checkbox
+						$("div[title=\"" + value + "\"]").addClass('checkbox-active');						
 						is.num = value;
 						
 						//resets timer after radio button click
@@ -117,31 +125,23 @@ Site: www.erikjamesthomas.com
 			},
 			nextprev : function(dir){
 				console.log('responding');
+				$("#" + is.num).hide();
 				if(dir == 'next'){
-					if(is.num == is.imagesrc.length - 1){
-						$("#" + is.num).hide();
-						is.num = 0;
-						$("#" + is.num).show();	
-						$("input[value=\"" + is.num + "\"]").prop('checked', true);		
+					if(is.num == is.imagesrc.length - 1){						
+						is.num = 0;							
 					  }else{
-						 $("#" + is.num).hide();
 						 is.num++
-						 $("#" + is.num).show();
-						 $("input[value=\"" + is.num + "\"]").prop('checked', true);
 					  }
 				}else if(dir == 'prev'){
 					if(is.num == 0){
-						$("#" + is.num).hide();
-						is.num = is.imagesrc.length - 1;
-						$("#" + is.num).show();
-						$("input[value=\"" + is.num + "\"]").prop('checked', true);			
+						is.num = is.imagesrc.length - 1;		
 					  }else{
-						 $("#" + is.num).hide();
 						 is.num--
-						 $("#" + is.num).show();
-						 $("input[value=\"" + is.num + "\"]").prop('checked', true);
 					  }
 				}
+
+				$("#" + is.num).show();
+				$("input[value=\"" + is.num + "\"]").prop('checked', true);
 				clearInterval(is.timer);
 				is.timer = setInterval(function(){is.imageRotate()}, is.settings.speed);
 			}
