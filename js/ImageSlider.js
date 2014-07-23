@@ -71,7 +71,7 @@ Site: www.erikjamesthomas.com
 				var arrange = is.imagesrc.length;							
 				for(i=0; i < is.imagesrc.length; i++){
 					if(is.settings.radio){
-					$('#CheckBoxes').append('<div title="' + i + '" class="checkbox"></div>');
+					$('#CheckBoxes').append('<div data-image="' + i + '" class="checkbox"></div>');
 					}
 					is.el.append('<a href="' + is.linksrc[i] + '"><div class="ImageSlideShow" id="' + i + '"></div></a>');
 					
@@ -83,7 +83,7 @@ Site: www.erikjamesthomas.com
 					arrange--;
 				}//end for loop
 				// Activates the div checkbox for the first image
-				$('div[title="0"]').addClass('checkbox-active');
+				$('div[data-image="0"]').addClass('checkbox-active');
 			},
 			imageRotate : function(){
 				//This will move the first image added of all other images
@@ -102,18 +102,18 @@ Site: www.erikjamesthomas.com
 				}
 				$("#" + is.num).show();
 				//Activates div checkbox for the rotate in image
-				$(".checkbox[title=\"" + is.num + "\"]" ).addClass('checkbox-active');
+				$(".checkbox[data-image=\"" + is.num + "\"]" ).addClass('checkbox-active');
 			},
 			checkbox : function(){
 				$('.checkbox').each(function(){
 					$(this).click(function(){
 						//Deactivate div checkbox
 						$('.checkbox-active').removeClass('checkbox-active')
-						var value = $(this).attr('title');
+						var value = $(this).attr('data-image');
 						$("#" + is.num).hide();
 						$("#" + value).show();
 						//activate div checkbox
-						$("div[title=\"" + value + "\"]").addClass('checkbox-active');						
+						$("div[data-image=\"" + value + "\"]").addClass('checkbox-active');						
 						is.num = value;
 						
 						//resets timer after radio button click
