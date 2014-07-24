@@ -6,7 +6,7 @@ html, body{
 	height:100%;
 }
 
-.imageslider{
+#imageslider{
 	width:100%;
 	height:50%;
 	position:relative;

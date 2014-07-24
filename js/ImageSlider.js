@@ -20,7 +20,7 @@ Site: www.erikjamesthomas.com
 			init : function(){
 				var doc = $(document);				
 				is.gatherImages();
-				is.gatherLinks();
+				
 				is.setHTML();
 				is.checkbox();
 				if(is.imagesrc.length > 1 ){
@@ -36,27 +36,22 @@ Site: www.erikjamesthomas.com
 				});
 			},
 			gatherImages : function(){
-				$('img').each(function(i){
+				$('img', is.el).each(function(i){
 					if(i <= 5){
-					is.imagesrc[i] = $(this).attr('src');
-					$(this).remove();
+						is.imagesrc[i] = new Image();
+						is.imagesrc[i] = $(this).attr('src');
+						if($(this).parent('a').length){
+							is.linksrc[i] = $(this).closest('a').attr('href');
+							$(this).unwrap();
+						}
+						$(this).remove();
 					}else{
-					$(this).remove()
+						$(this).remove()
 					};
 				});//end each
 				is.index = is.imagesrc.length; 
 			},
-			gatherLinks : function(){
-				$('a').each(function(i){
-					if(i <= 5){
-					is.linksrc[i] = new Image();
-					is.linksrc[i] = $(this).attr('href');
-					$(this).remove();
-					}else{
-					$(this).remove()
-					};
-				});//end each
-			},
+			
 			setHTML : function(){
 				if(is.settings.radio){
 					is.el.html('<div id="CheckBoxes"></div>');
@@ -65,16 +60,18 @@ Site: www.erikjamesthomas.com
 				}
 				
 				if(is.settings.arrows){
-				is.el.append('<div id="rightarrow"></div><div id="leftarrow"></div>');
+					is.el.append('<div id="rightarrow"></div><div id="leftarrow"></div>');
 				}
 				
 				var arrange = is.imagesrc.length;							
 				for(i=0; i < is.imagesrc.length; i++){
 					if(is.settings.radio){
-					$('#CheckBoxes').append('<div data-image="' + i + '" class="checkbox"></div>');
+						$('#CheckBoxes').append('<div data-image="' + i + '" class="checkbox"></div>');
 					}
-					is.el.append('<a href="' + is.linksrc[i] + '"><div class="ImageSlideShow" id="' + i + '"></div></a>');
-					
+					is.el.append('<div class="ImageSlideShow" id="' + i + '"></div>');
+					if(typeof is.linksrc[i] != 'undefined'){
+						$("#" + i).wrap('<a href="' + is.linksrc[i] + '"></a>');
+					}
 					$("#" + i).css({'background-image' : 'url(' + is.imagesrc[i] + ')',
 											'background-size' : 'cover',
 											'background-position' : 'center',
