@@ -14,17 +14,17 @@ Site: www.erikjamesthomas.com
 			//adds user options
 			settings : $.extend({
 				speed : 10000,
+				style : 'fade',
 				radio : true,
 				arrows : true	
 			}, options),
 			init : function(){
 				var doc = $(document);				
 				is.gatherImages();
-				
-				is.setHTML();
+				is.setHTML(is.settings.style);
 				is.checkbox();
 				if(is.imagesrc.length > 1 ){
-				is.timer = setInterval(function(){is.imageRotate()}, is.settings.speed);
+				is.timer = setInterval(function(){is.imageRotate(is.settings.style)}, is.settings.speed);
 				}
 				doc.delegate('#leftarrow', 'click', function(){
 					var dir = 'prev'; 
@@ -52,7 +52,8 @@ Site: www.erikjamesthomas.com
 				is.index = is.imagesrc.length; 
 			},
 			
-			setHTML : function(){
+			setHTML : function(style){
+				is.el.addClass('imageslider');
 				if(is.settings.radio){
 					is.el.html('<div id="CheckBoxes"></div>');
 				}else{
@@ -62,44 +63,80 @@ Site: www.erikjamesthomas.com
 				if(is.settings.arrows){
 					is.el.append('<div id="rightarrow"></div><div id="leftarrow"></div>');
 				}
-				
-				var arrange = is.imagesrc.length;							
-				for(i=0; i < is.imagesrc.length; i++){
-					if(is.settings.radio){
-						$('#CheckBoxes').append('<div data-image="' + i + '" class="checkbox"></div>');
-					}
-					is.el.append('<div class="ImageSlideShow" id="' + i + '"></div>');
-					if(typeof is.linksrc[i] != 'undefined'){
-						$("#" + i).wrap('<a href="' + is.linksrc[i] + '"></a>');
-					}
-					$("#" + i).css({'background-image' : 'url(' + is.imagesrc[i] + ')',
-											'background-size' : 'cover',
-											'background-position' : 'center',
-											'background-repeat' : 'no-repeat',
-											'z-index' : arrange});
-					arrange--;
-				}//end for loop
+				switch(style){
+					case 'fade' :
+						var arrange = is.imagesrc.length;							
+						for(i=0; i < is.imagesrc.length; i++){
+							if(is.settings.radio){
+								$('#CheckBoxes').append('<div data-image="' + i + '" class="checkbox"></div>');
+							}
+							is.el.append('<div class="ImageSlideShow" id="' + i + '"></div>');
+							if(typeof is.linksrc[i] != 'undefined'){
+								$("#" + i).wrap('<a href="' + is.linksrc[i] + '"></a>');
+							}
+							$("#" + i).css({'background-image' : 'url(' + is.imagesrc[i] + ')',
+													'background-size' : 'cover',
+													'background-position' : 'center',
+													'background-repeat' : 'no-repeat',
+													'z-index' : arrange});
+							arrange--;
+						}//end for loop						
+					break;
+					
+					case 'slide' :
+						is.el.append('<ul id="slide"></ul>');
+						$('#slide').css({'list-style-type' : 'none',
+										'display' : 'inline-block',
+										'margin' : 0,
+										'padding' : 0});
+						for(i=0; i < is.imagesrc.length; i++){
+						if(is.settings.radio){
+								$('#CheckBoxes').append('<div data-image="' + i + '" class="checkbox"></div>');
+							}
+						$('#slide').append('<li><div class="ImageSlideShow" id="' + i + '"></div></li>');
+						$("#" + i).css({'background-image' : 'url(' + is.imagesrc[i] + ')',
+													'background-size' : 'cover',
+													'background-position' : 'center',
+													'background-repeat' : 'no-repeat',
+													'z-index' : arrange});
+						}
+					break;
+				}
 				// Activates the div checkbox for the first image
-				$('div[data-image="0"]').addClass('checkbox-active');
+						$('div[data-image="0"]').addClass('checkbox-active');
 			},
-			imageRotate : function(){
-				//This will move the first image added of all other images
-				if(is.num == 0){
-					$("#" + is.num).css('z-index', is.imagesrc.length)	
+			imageRotate : function(style){
+				switch(style){
+					case 'fade' :
+						//This will move the first image added of all other images
+						if(is.num == 0){
+							$("#" + is.num).css('z-index', is.imagesrc.length)	
+						}
+						$("#" + is.num).fadeOut(600);
+						//Deactivates current div checkbox
+						$('.checkbox-active').removeClass('checkbox-active');
+						//resets counter at the last image
+						if(is.num == is.imagesrc.length - 1){
+							is.num = 0;
+							$("#" + is.num).css('z-index', 1);
+						}else{				
+						is.num++
+						}
+						$("#" + is.num).show();
+						//Activates div checkbox for the rotate in image
+						$(".checkbox[data-image=\"" + is.num + "\"]" ).addClass('checkbox-active');
+					break;
+					
+					case 'slide' :
+						$('.ImageSlideShow').css('float', 'left');
+						$('.checkbox-active').removeClass('checkbox-active');
+						var imageWidth = $("#" + is.num).width();
+						$("#slide").animate({left : - imageWidth}, 500);
+						
+						$(".checkbox[data-image=\"" + is.num + "\"]" ).addClass('checkbox-active');
+					
+					break;
 				}
-				$("#" + is.num).fadeOut(600);
-				//Deactivates current div checkbox
-				$('.checkbox-active').removeClass('checkbox-active');
-				//resets counter at the last image
-				if(is.num == is.imagesrc.length - 1){
-					is.num = 0;
-					$("#" + is.num).css('z-index', 1);
-				}else{				
-				is.num++
-				}
-				$("#" + is.num).show();
-				//Activates div checkbox for the rotate in image
-				$(".checkbox[data-image=\"" + is.num + "\"]" ).addClass('checkbox-active');
 			},
 			checkbox : function(){
 				$('.checkbox').each(function(){
@@ -107,8 +144,8 @@ Site: www.erikjamesthomas.com
 						//Deactivate div checkbox
 						$('.checkbox-active').removeClass('checkbox-active')
 						var value = $(this).attr('data-image');
-						$("#" + is.num).hide();
-						$("#" + value).show();
+						$("#" + is.num).fadeOut(600);
+						$("#" + value).fadeIn(600);
 						//activate div checkbox
 						$("div[data-image=\"" + value + "\"]").addClass('checkbox-active');						
 						is.num = value;
@@ -122,7 +159,7 @@ Site: www.erikjamesthomas.com
 			},
 			nextprev : function(dir){
 				$('.checkbox-active').removeClass('checkbox-active');
-				$("#" + is.num).hide();
+				$("#" + is.num).fadeOut(600);
 				if(dir == 'next'){
 					if(is.num == is.imagesrc.length - 1){						
 						is.num = 0;							
@@ -137,7 +174,7 @@ Site: www.erikjamesthomas.com
 					  }
 				}
 
-				$("#" + is.num).show();
+				$("#" + is.num).fadeIn(600);
 				$(".checkbox[data-image=\"" + is.num + "\"]" ).addClass('checkbox-active');
 				clearInterval(is.timer);
 				is.timer = setInterval(function(){is.imageRotate()}, is.settings.speed);
