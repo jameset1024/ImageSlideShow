@@ -152,7 +152,7 @@ Site: www.erikjamesthomas.com
 						
 						//resets timer after radio button click
 						clearInterval(is.timer);
-						is.timer = setInterval(function(){is.imageRotate()}, is.settings.speed);
+						is.timer = setInterval(function(){is.imageRotate(is.settings.style)}, is.settings.speed);
 					});
 					
 				});
@@ -177,7 +177,7 @@ Site: www.erikjamesthomas.com
 				$("#" + is.num).fadeIn(600);
 				$(".checkbox[data-image=\"" + is.num + "\"]" ).addClass('checkbox-active');
 				clearInterval(is.timer);
-				is.timer = setInterval(function(){is.imageRotate()}, is.settings.speed);
+				is.timer = setInterval(function(){is.imageRotate(is.settings.style)}, is.settings.speed);
 			}
 		}// end var is
 		
