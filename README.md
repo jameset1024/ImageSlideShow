@@ -7,7 +7,7 @@ jQuery Slide Show Project
 Description
 ==============
 
-This is a Jquery plugin which will take images and there links and turn them into a fading slide show. The plugin will only allow for 5 images as to not display to many radio buttons.
+This is a Jquery plugin which will take images and there links and turn them into a fading slide show. The plugin will only allow for 5 images as to not display to many radio buttons. Check out the index page to see how the plugin functions.
 
 =============
 Options
