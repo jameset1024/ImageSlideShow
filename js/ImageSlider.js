@@ -121,7 +121,7 @@ Site: www.erikjamesthomas.com
 				});
 			},
 			nextprev : function(dir){
-				console.log('responding');
+				$('.checkbox-active').removeClass('checkbox-active');
 				$("#" + is.num).hide();
 				if(dir == 'next'){
 					if(is.num == is.imagesrc.length - 1){						
@@ -138,7 +138,7 @@ Site: www.erikjamesthomas.com
 				}
 
 				$("#" + is.num).show();
-				$("input[value=\"" + is.num + "\"]").prop('checked', true);
+				$(".checkbox[data-image=\"" + is.num + "\"]" ).addClass('checkbox-active');
 				clearInterval(is.timer);
 				is.timer = setInterval(function(){is.imageRotate()}, is.settings.speed);
 			}

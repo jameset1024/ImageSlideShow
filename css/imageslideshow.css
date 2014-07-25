@@ -68,11 +68,7 @@ html, body{
 .checkbox-active{
 	background:url(../images/radio.png) -22px top no-repeat;
 }
-@media only screen and (max-height : 500px){
-	#CheckBoxes input{
-		margin-top:0;
-	}
-}
+
 @media only screen and (max-height : 600px){
 	#CheckBoxes{
 		display:none;

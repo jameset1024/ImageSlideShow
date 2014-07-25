@@ -2,10 +2,11 @@
 <html>
 <head>
 <meta charset="utf-8">
+<link href="css/main.css" rel="stylesheet">
 <link href="css/imageslideshow.css" rel="stylesheet">
 <script src="js/jquery-1.11.0.min.js"></script>
 <script src="js/ImageSlider.js"></script>
-<title>Image Slider</title>
+<title>Basic Image Slide Show</title>
 <script>
 $(document).ready(function() {
     $('#imageslider').ImageSlide();
@@ -14,13 +15,66 @@ $(document).ready(function() {
 </head>
 
 <body>
+<header>
+	<strong>Basic Image Slide Show</strong>
+</header>
+
 
 <div id="imageslider">
-<a href="http://www.google.com"><img src="images/13251689153_34ccfbdaaa_o.jpg"></a>
-<img src="images/daytime-city-view.jpg">
-<a href="http://www.msn.com"><img src="images/DSC_0014.jpg"></a>
+    <a href="http://www.google.com"><img src="images/13251689153_34ccfbdaaa_o.jpg"></a>
+        <img src="images/daytime-city-view.jpg">
+    <a href="http://www.msn.com"><img src="images/DSC_0014.jpg"></a>
 </div>
 
+<section>
+	<span>How To Use</span>
+	The basic image slide show plugin is a simple image slide show that will take the images that you provide and turn them into a slide show. The plugin will also accept links by wrapping your img in a link tag.
+    
+    In order to use the plugin simply add your images into a element and then call the plugin in a script to that element as shown below.
+    
+    <pre><code>
+&lt;!DOCTYPE HTML&gt;<br />
+&lt;html&gt;<br />
+&lt;head&gt;<br />
+	&lt;meta charset=&quot;utf-8&quot;&gt;<br />
+	&lt;title&gt;Untitled Document&lt;/title&gt;<br />
+&lt;script&gt;<br />
+$(document).ready(function() {<br />
+    $('#imageslider').ImageSlide();<br />
+});<br />
+&lt;/script&gt;<br />
+&lt;/head&gt;<br />
+<br />
+&lt;body&gt;<br />
+<br />
+&lt;div id=&quot;imageslider&quot;&gt;<br />
+    &lt;a href=&quot;http://www.google.com&quot;&gt;&lt;img src=&quot;images/13251689153_34ccfbdaaa_o.jpg&quot;&gt;&lt;/a&gt;<br />
+    &lt;img src=&quot;images/daytime-city-view.jpg&quot;&gt;<br />
+    &lt;a href=&quot;http://www.msn.com&quot;&gt;&lt;img src=&quot;images/DSC_0014.jpg&quot;&gt;&lt;/a&gt;<br />
+&lt;/div&gt;<br />
+&lt;/body&gt;<br />
+&lt;/html&gt;<br />
+
+    
+    </code></pre>
+</section>
+<section>
+	<span>Options</span>
+    <table>
+    	<tr>
+        	<td>speed</td>
+            <td>This is the speed in milli-seconds which is 1000 per second.</td>
+        </tr>
+        <tr>
+        	<td>arrows</td>
+            <td>By adding false would remove the arrows from the slide show</td>
+        </tr>
+        <tr>
+        	<td>radio</td>
+            <td>By adding false would remove the radio buttons from the botton the slide show</td>
+        </tr>
+    </table>
+</section>
 
 </body>
 </html>
