@@ -6,11 +6,8 @@ html, body{
 	height:100%;
 }
 
-#imageslider{
-	height:50%;
-}
+
 .imageslider{
-	width:100%;
 	position:relative;
 	overflow:hidden;
 }
@@ -19,6 +16,9 @@ html, body{
 	height:100%;
 	float:left;
 	position:absolute;
+}
+.ImageSlideShow img{
+	width:100%;
 }
 #CheckBoxes{
 	background:hsla(0,0%,0%,0.4);

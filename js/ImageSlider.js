@@ -16,7 +16,10 @@ Site: www.erikjamesthomas.com
 				speed : 10000,
 				style : 'fade',
 				radio : true,
-				arrows : true	
+				arrows : true,
+				height : '50%',
+				bgcolor : '#ffffff',
+				bgsize : 'cover'	
 			}, options),
 			init : function(){
 				var doc = $(document);				
@@ -54,6 +57,8 @@ Site: www.erikjamesthomas.com
 			
 			setHTML : function(style){
 				is.el.addClass('imageslider');
+				is.el.css({'width' : '100%',
+							'height' : is.settings.height});
 				if(is.settings.radio){
 					is.el.html('<div id="CheckBoxes"></div>');
 				}else{
@@ -65,6 +70,7 @@ Site: www.erikjamesthomas.com
 				}
 				switch(style){
 					case 'fade' :
+						is.el.css('background-color', is.settings.bgcolor);
 						var arrange = is.imagesrc.length;							
 						for(i=0; i < is.imagesrc.length; i++){
 							if(is.settings.radio){
@@ -75,9 +81,10 @@ Site: www.erikjamesthomas.com
 								$("#" + i).wrap('<a href="' + is.linksrc[i] + '"></a>');
 							}
 							$("#" + i).css({'background-image' : 'url(' + is.imagesrc[i] + ')',
-													'background-size' : 'cover',
+													'background-size' : is.settings.bgsize,
 													'background-position' : 'center',
 													'background-repeat' : 'no-repeat',
+													'background-color' : is.settings.bgcolor,
 													'z-index' : arrange});
 							arrange--;
 						}//end for loop						
@@ -99,7 +106,7 @@ Site: www.erikjamesthomas.com
 													'background-position' : 'center',
 													'background-repeat' : 'no-repeat',
 													'z-index' : arrange});
-						}
+						}//end for loop
 					break;
 				}
 				// Activates the div checkbox for the first image
