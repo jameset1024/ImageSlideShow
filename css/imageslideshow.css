@@ -21,7 +21,6 @@ html, body{
 	width:100%;
 }
 #CheckBoxes{
-	background:hsla(0,0%,0%,0.4);
 	width:100%;
 	height:8%;
 	position:absolute;
@@ -61,14 +60,16 @@ html, body{
 	opacity:1;
 }
 .checkbox{
-	background:url(../images/radio.png) top left no-repeat;
-	width:24px;
-	height:24px;
+	background:hsla(0,0%,0%,.75);
+	border:#000 solid thin;
+	border-radius:50%;
+	width:12px;
+	height:12px;
 	display:inline-block;
 	cursor:pointer;	
 }
 .checkbox-active{
-	background:url(../images/radio.png) -22px top no-repeat;
+	background:#43a0d9;
 }
 
 @media only screen and (max-height : 600px){
