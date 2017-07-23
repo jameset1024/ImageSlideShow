@@ -68,7 +68,7 @@ Website: www.brightthoughtdesign.com
 					is.el.html('');
 				}
 				
-				if(is.settings.arrows){
+				if(is.settings.arrows && is.imagesrc.length > 1){
 					is.el.append('<div id="rightarrow"></div><div id="leftarrow"></div>');
 				}
 				switch(style){
